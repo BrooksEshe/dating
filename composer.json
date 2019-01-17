@@ -1,0 +1,12 @@
+{
+  "name": "beshegre/328/dating",
+  "authors": [
+    {
+      "name": "Brooks Eshe",
+      "email": "beshe@mail.greenriver.edu"
+    }
+  ],
+  "require": {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
