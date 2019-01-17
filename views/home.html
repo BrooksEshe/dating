@@ -10,43 +10,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../styles/styles.css">
     <title>Document</title>
-    <style>
-        body{
-            font-family: Verdana;
-        }
-        #text{
-            float: left;
-        }
-        #content{
-            border: solid lightgrey;
-            text-align: center;
-            width: 70%;
-            margin-top: 2%;
-            padding-top: 2%;
-            padding-bottom: 2%;
-        }
-        #picture{
-            width: 50%;
-            height: 100%;
-            padding-top:5%;
-        }
-        #quotes{
-            border-top: solid lightgrey;
-            border-bottom: solid lightgrey;
-            width: 100%;
-            text-align: left;
-        }
-        #button{
-            margin-top: 10px;
-        }
-    </style>
 </head>
 <body>
-    <div class="container" id="content">
+    <div class="container border border-info img-rounded" id="content">
+        <div class="row">
             <div class="col-sm-6" id="text">
                 <h1>My Dating Site</h1>
                 <p>
-                    Welcome to the web's most succesful dating website. At
+                    Welcome to the web's most successful dating website. At
                     <strong>My Dating Website</strong> you'll meet another like minded
                     individuals. We have the highest success rate of couples on the web.
                     User's are matched by interest and location. Find out why so
@@ -57,15 +28,17 @@
                 <div id="quotes">
                     <i>"I met the love of my life after only a month!" -Andrea</i><br><br>
                     <i>"It was so easy to set up and profile and start meeting people.
-                    I didn't realize how many others were looking for love in my area" -John Smith</i><br><br>
+                        I didn't realize how many others were looking for love in my area" -John Smith</i><br><br>
                     <i>"Just try it! You'll never be the same!" -Sarah</i>
                 </div>
 
                 <button type="button" class="btn btn-primary btn-lg" id="button">Create a Profile!</button>
             </div>
-            <div class="col-6" id="picture">
-                <img src="../images/dating-home-page.jpg" alt="Couple" class="rounded img-responsive float-right">
+            <div class="col-sm-6" id="picture">
+                <img src="../images/dating-home-page.jpg" alt="Couple" class="img-rounded img-responsive float-right">
             </div>
+        </div>
+
     </div>
 </body>
 </html>

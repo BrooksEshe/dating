@@ -1,9 +1,6 @@
 body{
     font-family: Verdana;
 }
-#text{
-    float: left;
-}
 #content{
     border: solid lightgrey;
     text-align: center;
@@ -12,18 +9,10 @@ body{
     padding-top: 2%;
     padding-bottom: 2%;
 }
-#picture{
-    width: 50%;
-    height: 100%;
-    padding-top:5%;
-    float: right;
-}
+
 #quotes{
     border-top: solid lightgrey;
     border-bottom: solid lightgrey;
     width: 100%;
     text-align: left;
-}
-#button{
-    margin-top: 10px;
 }
