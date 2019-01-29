@@ -14,6 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../styles/personalstyle.css">
     <title>Personal Information</title>
 </head>
@@ -21,25 +22,28 @@
 <nav class="navbar navbar-light bg-light navbar-expand-lg border-bottom">
     <span class="navbar-brand mb-0 h1">My Dating Site</span>
 </nav>
-    <div class="container border rounded" id="content">
+    <div class="container border rounded mt-3" id="content">
         <div class="row pl-1">
             <div class="col-sm-12">
                 <h1>Personal Information</h1><hr>
             </div>
         </div>
         <div class="row">
-            <form class="col-sm-8" method="post">
-                <div class="form-group">
-                    <label><strong>First Name</strong></label>
-                    <input type="text" class="form-control" id="firstName" placeholder="">
+            <form class="col-sm-8" method="post" action="#">
+                <label><strong>First Name</strong></label>
+                <div class="input-group">
+                    <input type="text" class="form-control border-right-0" id="firstName" name="firstName" placeholder="">
+                    <div class="input-group-append">
+                        <span class="input-group-text bg-white border-left-0 fa fa-address-card-o"></span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label><strong>Last Name</strong></label>
-                    <input type="text" class="form-control" id="lastName" placeholder="">
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="">
                 </div>
                 <div class="form-group">
                     <label><strong>Age</strong></label>
-                    <input type="text" class="form-control" id="age" placeholder="">
+                    <input type="text" class="form-control" id="age" name="age" placeholder="">
                 </div>
                 <div class="form-group">
                     <label><strong>Gender</strong></label><br>
@@ -55,14 +59,24 @@
 
                 <div class="form-group">
                     <label><strong>Phone Number</strong></label>
-                    <input type="text" class="form-control" id="phoneNumber" placeholder="">
+                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="">
                 </div>
             </form>
+            <div class="col-sm-4 ">
+                <div class="card bg-light text-center">
+                    <div class="card-body">
+                        <strong>Note:</strong> All information entered is protected  by our
+                        <a href="#">privacy policy</a>. Profile information can only be viewed
+                        by others with your permission
+                    </div>
+                </div>
+
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-10"></div>
             <div class="col-sm-2">
-                <button type="button" class="btn btn-primary btn-md float-right ">Next ></button>
+                <a href="profile" class="btn btn-primary btn-md float-right mb-2">Next ></a>
             </div>
         </div>
     </div>

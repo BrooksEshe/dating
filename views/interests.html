@@ -32,13 +32,13 @@
             <div class="row pl-3 pr-3 pb-1">
                 <div class="col-sm-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="tv">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="Tv" id="tv" >
                         <label class="form-check-label" for="tv">
                             TV
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="puzzles">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="Puzzles" id="puzzles">
                         <label class="form-check-label" for="puzzles">
                             Puzzles
                         </label>
@@ -46,13 +46,13 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="movies">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="Movies" id="movies">
                         <label class="form-check-label" for="movies">
                             Movies
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="reading">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="Reading" id="reading">
                         <label class="form-check-label" for="reading">
                             Reading
                         </label>
@@ -60,13 +60,13 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="cook">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="Cooking" id="cook">
                         <label class="form-check-label" for="cook">
                             Cooking
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="cards">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="Playing cards" id="cards">
                         <label class="form-check-label" for="cards">
                             Playing cards
                         </label>
@@ -74,13 +74,13 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="board">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="Board games" id="board">
                         <label class="form-check-label" for="board">
                             Board games
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="video">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="Video games" id="video">
                         <label class="form-check-label" for="video">
                             Video games
                         </label>
@@ -93,13 +93,13 @@
         <div class="row pl-3 pr-3 pb-1">
             <div class="col-sm-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="hike">
+                    <input class="form-check-input" type="checkbox" name="outdoor[]" value="Hiking" id="hike">
                     <label class="form-check-label" for="hike">
                         Hiking
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="walk">
+                    <input class="form-check-input" type="checkbox" name="outdoor[]" value="Walking" id="walk">
                     <label class="form-check-label" for="walk">
                         Walking
                     </label>
@@ -107,13 +107,13 @@
             </div>
             <div class="col-sm-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="biking">
+                    <input class="form-check-input" type="checkbox" name="outdoor[]" value="Biking" id="biking">
                     <label class="form-check-label" for="biking">
                         Biking
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="climb">
+                    <input class="form-check-input" type="checkbox" name="outdoor[]" value="Climbing" id="climb">
                     <label class="form-check-label" for="climb">
                         Climbing
                     </label>
@@ -121,7 +121,7 @@
             </div>
             <div class="col-sm-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="swim">
+                    <input class="form-check-input" type="checkbox" name="outdoor[]" value="Swimming" id="swim">
                     <label class="form-check-label" for="swim">
                         Swimming
                     </label>
@@ -129,20 +129,21 @@
             </div>
             <div class="col-sm-3">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="collect">
+                    <input class="form-check-input" type="checkbox" name="outdoor[]" value="Collecting" id="collect">
                     <label class="form-check-label" for="collect">
                         Collecting
                     </label>
                 </div>
             </div>
         </div>
-    </form>
-    <div class="row pb-3">
-        <div class="col-sm-10"></div>
-        <div class="col-sm-2">
-            <button type="button" class="btn btn-primary btn-md float-right">Next ></button>
+        <div class="row pb-3">
+            <div class="col-sm-10"></div>
+            <div class="col-sm-2">
+                <input type="submit" href="summary" class="btn btn-primary btn-md float-right" value="Next >">
+            </div>
         </div>
-    </div>
+    </form>
+
 </div>
 </body>
 </html>
