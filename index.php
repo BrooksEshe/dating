@@ -64,66 +64,119 @@ $f3->set('states', array(
     'WY'=>"Wyoming"
 ));
 
-$f3->set('interests',array('tv','puzzles','movies','reading','cook','cards',
-        'board','video','hike','walk','biking','climb','swim','collect'));
+$f3->set('interests',array('TV','Puzzles','Movies','Reading','Cooking','Cards',
+        'Board games','Video games','Hiking','Walking','Biking','Climbing','Swimming','Collecting'));
 
+require_once('model/validation.php');
 //define a default route
 $f3->route('GET /', function(){
     $view = new View;
     echo $view->render('views/home.html');
 });
 
-$f3->route('GET|POST /personalinfo', function(){
+$f3->route('GET|POST /personalinfo', function($f3){
+    $_SESSION = array();
+    $isValid = false;
     if(isset($_POST['firstName'])){
         $firstName = $_POST['firstName'];
-        $_SESSION['firstName'] = $firstName;
+        if(validName($firstName)){
+            $_SESSION['firstName'] = $firstName;
+            $isValid = true;
+        }
     }
     if(isset($_POST['lastName'])){
         $lastName = $_POST['lastName'];
-        $_SESSION['lastName'] = $lastName;
+        if(validName($lastName)){
+            $_SESSION['lastName'] = $lastName;
+            $isValid = true;
+        }
     }
     if(isset($_POST['age'])){
         $age = $_POST['age'];
-        $_SESSION['age'] = $age;
+        if(validAge($age)){
+            $_SESSION['age'] = $age;
+            $isValid = true;
+        }
     }
     if(isset($_POST['gender'])){
         $gender = $_POST['gender'];
         $_SESSION['gender'] = $gender;
+        $isValid = true;
     }
     if(isset($_POST['phoneNumber'])){
         $phoneNumber = $_POST['phoneNumber'];
-        $_SESSION['phoneNumber'] = $phoneNumber;
+        if(validPhone($phoneNumber)){
+            $_SESSION['phoneNumber'] = $phoneNumber;
+            $isValid = true;
+        }else{
+            $isValid = false;
+        }
+    }
+    if($isValid){
+        $f3 -> reroute('/profile');
     }
     $template = new Template();
     echo $template->render('views/personalinfo.html');
 });
 
-$f3->route('GET|POST /profile', function(){
+$f3->route('GET|POST /profile', function($f3){
+    $isValid = false;
     if(isset($_POST['email'])){
         $email = $_POST['email'];
         $_SESSION['email'] = $email;
+        $isValid = true;
     }
     if(isset($_POST['seeking'])){
         $seeking = $_POST['seeking'];
         $_SESSION['seeking'] = $seeking;
+        $isValid = true;
     }
     if(isset($_POST['biography'])){
         $biography = $_POST['biography'];
         $_SESSION['biography'] = $biography;
+        $isValid = true;
     }
     if(isset($_POST['states'])){
         $states = $_POST['states'];
         $_SESSION['states'] = $states;
+        $isValid = true;
+    }
+    if($isValid){
+        $f3 -> reroute('/interests');
     }
     $template = new Template();
     echo $template->render('views/profile.html');
 });
 
 $f3->route('GET|POST /interests', function($f3){
+    $isValid = null;
     if(isset($_POST['indoor'])){
         $indoor = $_POST['indoor'];
         $indoorString = implode(", ", $indoor);
         $_SESSION['indoorActivities'] = $indoorString;
+        foreach($indoor as $activity){
+            if(validateIndoor($activity)){
+                $isValid = true;
+            }else{
+                $isValid = false;
+            }
+        }
+    }
+    if(isset($_POST['outdoor'])){
+        if(isset($_POST['outdoor'])){
+            $outdoor = $_POST['outdoor'];
+            $outdoorString = implode(", ", $outdoor);
+            $_SESSION['outdoorActivities'] = $outdoorString;
+            foreach($outdoor as $activity){
+                if(validateoutdoor($activity)){
+                    $isValid = true;
+                }else{
+                    $isValid = false;
+                }
+            }
+        }
+    }
+    if($isValid){
         $f3 -> reroute('/summary');
     }
 
@@ -132,7 +185,7 @@ $f3->route('GET|POST /interests', function($f3){
 });
 
 $f3->route('GET|POST /summary', function(){
-    print_r($_SESSION['indoorActivities']);
+
     $template = new Template();
     echo $template->render('views/summary.html');
 });
