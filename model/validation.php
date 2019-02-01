@@ -11,7 +11,10 @@ function validName($name){
 
 //function to validate that age is a number and 18 or older
 function validAge($age){
-    if(is_numeric($age) && $age >=18){
+    if($age < 18){
+        return false;
+    }
+    else if(is_numeric($age)){
         return true;
     }
     return false;
@@ -27,18 +30,20 @@ function validPhone($phone){
 
 function validateIndoor($indoor){
     $activities = array('TV','Puzzles','Movies','Reading','Cooking','Playing cards',
-        'Board games','Video games','Hiking','Walking','Biking','Climbing','Swimming','Collecting');
+        'Board games','Video games');
         if (in_array($indoor,$activities)){
             return true;
+        }else{
+            return false;
         }
-        return false;
 }
 
 function validateOutdoor($outdoor){
-    $activities = array('TV','Puzzles','Movies','Reading','Cooking','Playing cards',
-        'Board games','Video games','Hiking','Walking','Biking','Climbing','Swimming','Collecting');
+    $activities = array('Hiking','Walking','Biking','Climbing','Swimming','Collecting');
         if (in_array($outdoor,$activities)){
             return true;
+        }else{
+            return false;
         }
-    return false;
+
 }

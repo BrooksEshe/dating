@@ -5,7 +5,6 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../styles/personalstyle.css">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <!-- jQuery library -->
@@ -15,70 +14,91 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../styles/personalstyle.css">
     <title>Personal Information</title>
 </head>
 <body>
 <nav class="navbar navbar-light bg-light navbar-expand-lg border-bottom">
     <span class="navbar-brand mb-0 h1">My Dating Site</span>
 </nav>
-    <div class="container border rounded mt-3" id="content">
-        <div class="row pl-1">
-            <div class="col-sm-12">
-                <h1>Personal Information</h1><hr>
-            </div>
+<div class="container border rounded mt-3" id="content">
+    <div class="row pl-1">
+        <div class="col-sm-12">
+            <h1>Personal Information</h1>
+            <hr>
         </div>
+    </div>
+
+    <form method="post" action="#">
         <div class="row">
-            <form class="col-sm-8" method="post" action="#">
-                <label><strong>First Name</strong></label>
-                <div class="input-group">
-                    <input type="text" class="form-control border-right-0" id="firstName" name="firstName" placeholder="">
-                    <div class="input-group-append">
-                        <span class="input-group-text bg-white border-left-0 fa fa-address-card-o"></span>
+            <div class="col-sm-8">
+                <div class="form-group">
+                    <label><strong>First Name</strong></label>
+                    <check if="{{ isset(@errors['first']) }}">
+                        <span>{{ @errors ['first']}}</span>
+                    </check>
+                    <div class="input-group">
+                        <input type="text" class="form-control border-right-0" id="firstName" name="firstName"
+                               value="{{@SESSION['firstName']}}">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-white border-left-0 fa fa-address-card-o"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label><strong>Last Name</strong></label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="">
+                    <check if="{{ isset(@errors['last']) }}">
+                        <span>{{ @errors ['last']}}</span>
+                    </check>
+                    <input type="text" class="form-control" id="lastName" name="lastName"
+                           value="{{@SESSION['lastName']}}">
                 </div>
                 <div class="form-group">
                     <label><strong>Age</strong></label>
-                    <input type="text" class="form-control" id="age" name="age" placeholder="">
+                    <check if="{{ isset(@errors['age']) }}">
+                        <span>{{ @errors ['age']}}</span>
+                    </check>
+                    <input type="text" class="form-control" id="age" name="age" value="{{@SESSION['age']}}">
                 </div>
                 <div class="form-group">
                     <label><strong>Gender</strong></label><br>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="gender" id="female" value="option1">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female"
+                        {{@female}}>
                         <label class="form-check-label" for="female">Female</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="gender" id="male" value="option2">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male"
+                               {{@male}}>
                         <label class="form-check-label" for="male">Male</label>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label><strong>Phone Number</strong></label>
-                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="">
+                    <check if="{{ isset(@errors['number']) }}">
+                        <span>{{ @errors ['number']}}</span>
+                    </check>
+                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                           placeholder="111-222-3333"
+                           value="{{@SESSION['phoneNumber']}}">
                 </div>
-            </form>
-            <div class="col-sm-4 ">
+            </div>
+            <div class="col-sm-4">
                 <div class="card bg-light text-center">
                     <div class="card-body">
-                        <strong>Note:</strong> All information entered is protected  by our
+                        <strong>Note:</strong> All information entered is protected by our
                         <a href="#">privacy policy</a>. Profile information can only be viewed
                         by others with your permission
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="row">
             <div class="col-sm-10"></div>
             <div class="col-sm-2">
-                <a href="profile" class="btn btn-primary btn-md float-right mb-2">Next ></a>
+                <input type="submit" class="btn btn-primary btn-md float-right mb-3" value="Next >">
             </div>
         </div>
-    </div>
+    </form>
+</div>
 </body>
 </html>

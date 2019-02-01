@@ -11,6 +11,7 @@ $f3 = Base::instance();
 
 //create states array
 $f3->set('states', array(
+    'select'=>'Select',
     'AL'=>"Alabama",
     'AK'=>"Alaska",
     'AZ'=>"Arizona",
@@ -82,6 +83,9 @@ $f3->route('GET|POST /personalinfo', function($f3){
         if(validName($firstName)){
             $_SESSION['firstName'] = $firstName;
             $isValid = true;
+        }else{
+            $isValid = false;
+            $f3->set("errors['first']", "Please enter a first name.");
         }
     }
     if(isset($_POST['lastName'])){
@@ -89,6 +93,9 @@ $f3->route('GET|POST /personalinfo', function($f3){
         if(validName($lastName)){
             $_SESSION['lastName'] = $lastName;
             $isValid = true;
+        }else{
+            $isValid = false;
+            $f3->set("errors['last']", "Please enter a last name");
         }
     }
     if(isset($_POST['age'])){
@@ -96,11 +103,22 @@ $f3->route('GET|POST /personalinfo', function($f3){
         if(validAge($age)){
             $_SESSION['age'] = $age;
             $isValid = true;
+        }else{
+            $isValid = false;
+            $f3->set("errors['age']", "Please enter an age 18 or older.");
         }
     }
     if(isset($_POST['gender'])){
         $gender = $_POST['gender'];
         $_SESSION['gender'] = $gender;
+        if($gender == 'Male'){
+            $f3->set("male","checked=checked");
+            $f3->set("female","");
+        }
+        if($gender == 'Female'){
+            $f3->set("female","checked=checked");
+            $f3->set("male","");
+        }
         $isValid = true;
     }
     if(isset($_POST['phoneNumber'])){
@@ -110,6 +128,7 @@ $f3->route('GET|POST /personalinfo', function($f3){
             $isValid = true;
         }else{
             $isValid = false;
+            $f3->set("errors['number']", "Please enter an correct phone number.");
         }
     }
     if($isValid){
@@ -121,26 +140,48 @@ $f3->route('GET|POST /personalinfo', function($f3){
 
 $f3->route('GET|POST /profile', function($f3){
     $isValid = false;
+
     if(isset($_POST['email'])){
         $email = $_POST['email'];
         $_SESSION['email'] = $email;
         $isValid = true;
+        if($email==""){
+            $isValid = false;
+            $f3->set("errors['email']","Please enter an email address");
+        }
     }
+
     if(isset($_POST['seeking'])){
         $seeking = $_POST['seeking'];
         $_SESSION['seeking'] = $seeking;
         $isValid = true;
+        if($seeking == 'Male'){
+            $f3->set("seekingMale","checked=checked");
+            $f3->set("female","");
+        }
+        if($seeking == 'Female'){
+            $f3->set("seekingFemale","checked=checked");
+            $f3->set("male","");
+        }
     }
+
     if(isset($_POST['biography'])){
         $biography = $_POST['biography'];
         $_SESSION['biography'] = $biography;
         $isValid = true;
     }
+
     if(isset($_POST['states'])){
         $states = $_POST['states'];
         $_SESSION['states'] = $states;
         $isValid = true;
     }
+
+    if($_POST['states'] == 'Select'){
+        $isValid  = false;
+        $f3->set("errors['states']", "Please select a state.");
+    }
+
     if($isValid){
         $f3 -> reroute('/interests');
     }
@@ -149,35 +190,42 @@ $f3->route('GET|POST /profile', function($f3){
 });
 
 $f3->route('GET|POST /interests', function($f3){
-    $isValid = null;
-    if(isset($_POST['indoor'])){
-        $indoor = $_POST['indoor'];
-        $indoorString = implode(", ", $indoor);
-        $_SESSION['indoorActivities'] = $indoorString;
-        foreach($indoor as $activity){
-            if(validateIndoor($activity)){
+    if(isset($_POST['submit'])){
+        if(empty($_POST['indoor']) && empty($_POST['outdoor'])){
+            $f3 -> reroute('/summary');
+        }else{
+            $isValid = false;
+            if(isset($_POST['indoor'])){
+                $indoor = $_POST['indoor'];
+                $indoorString = implode(", ", $indoor);
+                $_SESSION['indoorActivities'] = $indoorString;
                 $isValid = true;
-            }else{
-                $isValid = false;
-            }
-        }
-    }
-    if(isset($_POST['outdoor'])){
-        if(isset($_POST['outdoor'])){
-            $outdoor = $_POST['outdoor'];
-            $outdoorString = implode(", ", $outdoor);
-            $_SESSION['outdoorActivities'] = $outdoorString;
-            foreach($outdoor as $activity){
-                if(validateoutdoor($activity)){
-                    $isValid = true;
-                }else{
-                    $isValid = false;
+                foreach($indoor as $activity){
+                    if(!(validateIndoor($activity))){
+                        $isValid = false;
+                        $f3->set("errors['indoor']", "Please choose a correct interest.");
+                    }
                 }
             }
+            if(isset($_POST['outdoor'])){
+                $outdoor = $_POST['outdoor'];
+                $outdoorString = implode(", ", $outdoor);
+                $_SESSION['outdoorActivities'] = "$outdoorString";
+                $isValid = true;
+                if($outdoor==""){
+                    return;
+                }
+                foreach($outdoor as $activity){
+                    if(!(validateOutdoor($activity))){
+                        $isValid = false;
+                        $f3->set("errors['outdoor']", "Please choose a correct interest.");
+                    }
+                }
+            }
+            if($isValid){
+                $f3->reroute('/summary');
+            }
         }
-    }
-    if($isValid){
-        $f3 -> reroute('/summary');
     }
 
     $template = new Template();

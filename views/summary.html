@@ -25,14 +25,14 @@
         <div class="row">
             <div class="col-sm-6 pt-2 ">
                 <div class="border rounded">
-                    <p class="border-bottom mb-1 pl-2">Name:</p>
-                    <p class="border-bottom mb-1 pl-2 pb-1">Gender:</p>
-                    <p class="border-bottom mb-1 pl-2 pb-1">Age:</p>
-                    <p class="border-bottom mb-1 pl-2 pb-1">Phone Number:</p>
-                    <p class="border-bottom mb-1 pl-2 pb-1">Email:</p>
-                    <p class="border-bottom mb-1 pl-2 pb-1">State:</p>
-                    <p class="border-bottom mb-1 pl-2 pb-1">Seeking:</p>
-                    <p class="pl-2 mb-1">Interests: {{@SESSION['indoorActivities']}}</p>
+                    <p class="border-bottom mb-1 pl-2">Name: {{@SESSION['firstName']}} {{@SESSION['lastName']}}</p>
+                    <p class="border-bottom mb-1 pl-2 pb-1">Gender: {{@SESSION['gender']}}</p>
+                    <p class="border-bottom mb-1 pl-2 pb-1">Age: {{@SESSION['age']}}</p>
+                    <p class="border-bottom mb-1 pl-2 pb-1">Phone Number: {{@SESSION['phoneNumber']}}</p>
+                    <p class="border-bottom mb-1 pl-2 pb-1">Email: {{@SESSION['email']}}</p>
+                    <p class="border-bottom mb-1 pl-2 pb-1">State: {{@SESSION['states']}}</p>
+                    <p class="border-bottom mb-1 pl-2 pb-1">Seeking: {{@SESSION['seeking']}}</p>
+                    <p class="pl-2 mb-1">Interests: {{@SESSION['indoorActivities']}} {{@SESSION['outdoorActivities']}}</p>
                 </div>
 
             </div>
@@ -41,13 +41,7 @@
                 <br>
                 <label>Biography</label>
                 <p class="text-center">
-                    asdfasdfasdfasdfasdf
-                    asdfasdfa  asdfasfefasdf  asdfwefasdf wefasdf awef
-                    asdfasdddddddddddddddddd dddddddddddddddddddddd
-                    asdf afjashdflk asldkfjlajwefl kajs ofij asldflaj sfj la
-                    asdfasdsssssssssssfasdf l;aksdof lasjdfoiwel la lfjls laksjdflj
-                    a lasflwej
-                    asjfdowjelfjkfljasldf ljsldfjwoieflaskj oijfel
+                    {{@SESSION['biography']}}
                 </p>
             </div>
         </div>
