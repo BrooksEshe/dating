@@ -25,14 +25,17 @@
         <div class="row">
             <div class="col-sm-6 pt-2 ">
                 <div class="border rounded">
-                    <p class="border-bottom mb-1 pl-2">Name: {{@SESSION['firstName']}} {{@SESSION['lastName']}}</p>
-                    <p class="border-bottom mb-1 pl-2 pb-1">Gender: {{@SESSION['gender']}}</p>
-                    <p class="border-bottom mb-1 pl-2 pb-1">Age: {{@SESSION['age']}}</p>
-                    <p class="border-bottom mb-1 pl-2 pb-1">Phone Number: {{@SESSION['phoneNumber']}}</p>
-                    <p class="border-bottom mb-1 pl-2 pb-1">Email: {{@SESSION['email']}}</p>
-                    <p class="border-bottom mb-1 pl-2 pb-1">State: {{@SESSION['states']}}</p>
-                    <p class="border-bottom mb-1 pl-2 pb-1">Seeking: {{@SESSION['seeking']}}</p>
-                    <p class="pl-2 mb-1">Interests: {{@SESSION['indoorActivities']}} {{@SESSION['outdoorActivities']}}</p>
+                        <p class="border-bottom mb-1 pl-2">Name: {{@SESSION.member->getFname()}} {{@SESSION.member->getLname()}}</p>
+                        <p class="border-bottom mb-1 pl-2 pb-1">Gender: {{@SESSION['member']->getGender()}}</p>
+                        <p class="border-bottom mb-1 pl-2 pb-1">Age: {{@SESSION['member']->getAge()}}</p>
+                        <p class="border-bottom mb-1 pl-2 pb-1">Phone Number: {{@SESSION['member']->getPhone()}}</p>
+                        <p class="border-bottom mb-1 pl-2 pb-1">Email: {{@SESSION['member']->getEmail()}}</p>
+                        <p class="border-bottom mb-1 pl-2 pb-1">State: {{@SESSION['member']->getState()}}</p>
+                        <p class="border-bottom mb-1 pl-2 pb-1">Seeking: {{@SESSION['member']->getSeeking()}}</p>
+                        <check if="{{@SESSION['member'] instanceof PremiumMember}}">
+                            <p class="pl-2 mb-1">Interests: {{@SESSION['indoorActivities']}} {{@SESSION['outdoorActivities']}}</p>
+                        </check>
+
                 </div>
 
             </div>
@@ -41,7 +44,7 @@
                 <br>
                 <label>Biography</label>
                 <p class="text-center">
-                    {{@SESSION['biography']}}
+                    {{@SESSION['member']->getBio()}}
                 </p>
             </div>
         </div>

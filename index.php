@@ -22,6 +22,7 @@ $f3->set('interests',array('TV','Puzzles','Movies','Reading','Cooking','Cards',
         'Board games','Video games','Hiking','Walking','Biking','Climbing','Swimming','Collecting'));
 
 require_once('model/validation.php');
+
 //define a default route
 $f3->route('GET /', function(){
     $view = new View;
@@ -31,10 +32,15 @@ $f3->route('GET /', function(){
 $f3->route('GET|POST /personalinfo', function($f3){
     $_SESSION = array();
     $isValid = false;
+    $firstName="";
+    $lastName="";
+    $age="";
+    $gender="";
+    $phoneNumber="";
+
     if(isset($_POST['firstName'])){
         $firstName = $_POST['firstName'];
         if(validName($firstName)){
-            $_SESSION['firstName'] = $firstName;
             $isValid = true;
         }else{
             $isValid = false;
@@ -44,7 +50,6 @@ $f3->route('GET|POST /personalinfo', function($f3){
     if(isset($_POST['lastName'])){
         $lastName = $_POST['lastName'];
         if(validName($lastName)){
-            $_SESSION['lastName'] = $lastName;
             $isValid = true;
         }else{
             $isValid = false;
@@ -54,7 +59,6 @@ $f3->route('GET|POST /personalinfo', function($f3){
     if(isset($_POST['age'])){
         $age = $_POST['age'];
         if(validAge($age)){
-            $_SESSION['age'] = $age;
             $isValid = true;
         }else{
             $isValid = false;
@@ -63,7 +67,6 @@ $f3->route('GET|POST /personalinfo', function($f3){
     }
     if(isset($_POST['gender'])){
         $gender = $_POST['gender'];
-        $_SESSION['gender'] = $gender;
         if($gender == 'Male'){
             $f3->set("male","checked=checked");
             $f3->set("female","");
@@ -77,26 +80,39 @@ $f3->route('GET|POST /personalinfo', function($f3){
     if(isset($_POST['phoneNumber'])){
         $phoneNumber = $_POST['phoneNumber'];
         if(validPhone($phoneNumber)){
-            $_SESSION['phoneNumber'] = $phoneNumber;
             $isValid = true;
         }else{
             $isValid = false;
             $f3->set("errors['number']", "Please enter an correct phone number.");
         }
     }
+
+
     if($isValid){
+        if(isset($_POST['premium'])){
+            $member = new PremiumMember($firstName,$lastName,$age, $gender, $phoneNumber);
+            $_SESSION['member']  = $member;
+        }else{
+            $member = new Member($firstName,$lastName,$age, $gender, $phoneNumber);
+            $_SESSION['member'] = $member;
+        }
         $f3 -> reroute('/profile');
     }
     $template = new Template();
     echo $template->render('views/personalinfo.html');
 });
 
+
+
+
 $f3->route('GET|POST /profile', function($f3){
+    print_r($_SESSION['member']);
     $isValid = false;
+    $member = $_SESSION['member'];
 
     if(isset($_POST['email'])){
         $email = $_POST['email'];
-        $_SESSION['email'] = $email;
+        $member->setEmail($email);
         $isValid = true;
         if($email==""){
             $isValid = false;
@@ -106,7 +122,7 @@ $f3->route('GET|POST /profile', function($f3){
 
     if(isset($_POST['seeking'])){
         $seeking = $_POST['seeking'];
-        $_SESSION['seeking'] = $seeking;
+        $member->setSeeking($seeking);
         $isValid = true;
         if($seeking == 'Male'){
             $f3->set("seekingMale","checked=checked");
@@ -120,13 +136,13 @@ $f3->route('GET|POST /profile', function($f3){
 
     if(isset($_POST['biography'])){
         $biography = $_POST['biography'];
-        $_SESSION['biography'] = $biography;
+        $member->setBio($biography);
         $isValid = true;
     }
 
     if(isset($_POST['states'])){
         $states = $_POST['states'];
-        $_SESSION['states'] = $states;
+        $member->setState($states);
         $isValid = true;
     }
 
@@ -136,13 +152,22 @@ $f3->route('GET|POST /profile', function($f3){
     }
 
     if($isValid){
-        $f3 -> reroute('/interests');
+        $_SESSION['member'] = $member;
+        if($member instanceof PremiumMember){
+            $f3 -> reroute('/interests');
+        }else{
+            $f3 -> reroute('/summary');
+        }
     }
     $template = new Template();
     echo $template->render('views/profile.html');
 });
 
+
+
+
 $f3->route('GET|POST /interests', function($f3){
+    $member = $_SESSION['member'];
     if(isset($_POST['submit'])){
         if(empty($_POST['indoor']) && empty($_POST['outdoor'])){
             $f3 -> reroute('/summary');
@@ -152,6 +177,7 @@ $f3->route('GET|POST /interests', function($f3){
                 $indoor = $_POST['indoor'];
                 $indoorString = implode(", ", $indoor);
                 $_SESSION['indoorActivities'] = $indoorString;
+                $member->setInDoorInterests($indoor);
                 $isValid = true;
                 foreach($indoor as $activity){
                     if(!(validateIndoor($activity))){
@@ -164,6 +190,7 @@ $f3->route('GET|POST /interests', function($f3){
                 $outdoor = $_POST['outdoor'];
                 $outdoorString = implode(", ", $outdoor);
                 $_SESSION['outdoorActivities'] = "$outdoorString";
+                $member->setOutDoorInterests($outdoor);
                 $isValid = true;
                 if($outdoor==""){
                     return;
@@ -176,6 +203,7 @@ $f3->route('GET|POST /interests', function($f3){
                 }
             }
             if($isValid){
+                $_SESSION['member'] = $member;
                 $f3->reroute('/summary');
             }
         }
@@ -184,6 +212,9 @@ $f3->route('GET|POST /interests', function($f3){
     $template = new Template();
     echo $template->render('views/interests.html');
 });
+
+
+
 
 $f3->route('GET|POST /summary', function(){
 
