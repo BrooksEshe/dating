@@ -51,7 +51,12 @@
                     <td>{{@members['state']}}</td>
                     <td>{{@members['gender']}}</td>
                     <td>{{@members['seeking']}}</td>
-                    <td>{{@members['premium']}}</td>
+                    <check if="{{@members['premium'] == 1}}">
+                        <td><input type="checkbox" checked="checked" disabled> </td>
+                    </check>
+                    <check if="{{@members['premium'] == 0}}">
+                        <td><input type="checkbox" disabled> </td>
+                    </check>
                     <td>{{@members['interests']}}</td>
                 </tr>
             </repeat>
