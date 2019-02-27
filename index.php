@@ -1,8 +1,17 @@
 <?php
 //require
 require_once ('vendor/autoload.php');
+require_once ('model/db-functions.php');
+
 session_start();
 
+//connect to database
+$dbh = connect();
+if(!$dbh){
+    exit;
+}
+
+//error reporting
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 
@@ -41,6 +50,7 @@ $f3->route('GET|POST /personalinfo', function($f3){
     if(isset($_POST['firstName'])){
         $firstName = $_POST['firstName'];
         if(validName($firstName)){
+            $_SESSION['firstName'] = $firstName;
             $isValid = true;
         }else{
             $isValid = false;
@@ -50,6 +60,7 @@ $f3->route('GET|POST /personalinfo', function($f3){
     if(isset($_POST['lastName'])){
         $lastName = $_POST['lastName'];
         if(validName($lastName)){
+            $_SESSION['lastName'] = $lastName;
             $isValid = true;
         }else{
             $isValid = false;
@@ -59,6 +70,7 @@ $f3->route('GET|POST /personalinfo', function($f3){
     if(isset($_POST['age'])){
         $age = $_POST['age'];
         if(validAge($age)){
+            $_SESSION['age'] = $age;
             $isValid = true;
         }else{
             $isValid = false;
@@ -80,6 +92,7 @@ $f3->route('GET|POST /personalinfo', function($f3){
     if(isset($_POST['phoneNumber'])){
         $phoneNumber = $_POST['phoneNumber'];
         if(validPhone($phoneNumber)){
+            $_SESSION['phoneNumber'] = $phoneNumber;
             $isValid = true;
         }else{
             $isValid = false;
@@ -106,7 +119,6 @@ $f3->route('GET|POST /personalinfo', function($f3){
 
 
 $f3->route('GET|POST /profile', function($f3){
-    print_r($_SESSION['member']);
     $isValid = false;
     $member = $_SESSION['member'];
 
@@ -217,11 +229,47 @@ $f3->route('GET|POST /interests', function($f3){
 
 
 $f3->route('GET|POST /summary', function(){
+    $member = $_SESSION['member'];
+    if(!empty($_SESSION['indoorActivities']))
+    {
+        $_SESSION['outdoorActivities'] = $_SESSION['outdoorActivities'] . ", ";
+    }
+    if($member instanceof PremiumMember){
+        $premium = 1;
+        $interests = $_SESSION['outdoorActivities'] . $_SESSION['indoorActivities'];
+    }else{
+        $premium = 0;
+        $interests ="";
+    }
+
+    insertMember($member->getFname(),$member->getLname(),$member->getAge(),$member->getGender(),
+        $member->getPhone(),$member->getEmail(),$member->getState(),$member->getSeeking(),
+        $member->getBio(), $premium, null, $interests);
+
 
     $template = new Template();
     echo $template->render('views/summary.html');
 });
 
 
+//show admin page
+$f3->route('GET|POST /admin', function($f3){
+    $members = getMembers();
+    $f3->set('members',$members);
+
+   $template = new Template();
+   echo $template->render('views/admin.html');
+});
+
+//Define a route to view a student summary
+$f3->route('GET|POST /admin/@id', function($f3, $params) {
+    $id = $params['id'];
+    $member = getMember($id);
+    $f3->set('member', $member);
+
+    //load a template
+    $template = new Template();
+    echo $template->render('views/view-member.html');
+});
 //run fat free
 $f3->run();

@@ -33,7 +33,7 @@ function connect(){
 function getMembers(){
     global $dbh;
 
-    $sql = "SELECT * FROM Member ORDER BY last, first";
+    $sql = "SELECT * FROM Members ORDER BY lname, fname";
     $statement = $dbh->prepare($sql);
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -43,13 +43,14 @@ function getMembers(){
 function getMember($id){
     global $dbh;
 
-    $sql = "SELECT * FROM Member WHERE member_id = :id";
+    $sql = "SELECT * FROM Members WHERE member_id = :id";
     $statement = $dbh->prepare($sql);
     $statement->bindParam(':id',$id,PDO::PARAM_STR);
 
     $statement->execute();
-    $row = $statement->fetch(PDO::FETCH_ASSOC);
-    return $row;
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+    return $result;
 }
 
 
@@ -59,7 +60,9 @@ function insertMember($fname,$lname,$age,$gender,$phone,$email,
 {
     global $dbh;
 
-    $sql = "INSERT INTO Member VALUES(:fname, :lname, :age, :gender, :phone, :email,
+    $sql = "INSERT INTO Members(fname, lname, age, gender, phone, email, 
+                  state, seeking, bio, premium, image, interests)
+                        VALUES(:fname, :lname, :age, :gender, :phone, :email,
                                     :state, :seeking, :bio, :premium, :image, :interests)";
 
     $statement = $dbh->prepare($sql);

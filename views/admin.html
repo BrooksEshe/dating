@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <title>My Dating Site</title>
+</head>
+<body>
+<nav class="navbar navbar-light bg-light navbar-expand-lg border-bottom">
+    <a class="navbar-brand mb-0 h1" href="/328/dating">My Dating Site</a>
+    <a class="navbar-brand mb-0 h1" href="/328/dating/admin">Admin</a>
+</nav>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Membership</h1>
+        </div>
+    </div>
+    <div class="row">
+
+        <table class="table">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">State</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Seeking</th>
+                <th scope="col">Premium</th>
+                <th scope="col">Interests</th>
+            </tr>
+            <repeat group="{{@members}}" value="{{@members}}">
+                <tr>
+                    <td scope="row"><a href="{{@BASE}}/admin/{{@members['member_id']}}">{{@members['member_id']}}</a></td>
+                    <td>{{@members['fname']}} {{@members['lname']}}</td>
+                    <td>{{@members['age']}}</td>
+                    <td>{{@members['phone']}}</td>
+                    <td>{{@members['email']}}</td>
+                    <td>{{@members['state']}}</td>
+                    <td>{{@members['gender']}}</td>
+                    <td>{{@members['seeking']}}</td>
+                    <td>{{@members['premium']}}</td>
+                    <td>{{@members['interests']}}</td>
+                </tr>
+            </repeat>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
